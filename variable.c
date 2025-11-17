@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include "game.c"
+//imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
+
 char umove()
 {
     char u;
-    printf("Play your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter Q to exit game\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\n\t:");
+    printf("Play your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\n\t:");
     scanf("%c", &u);
     return u;
 }
@@ -41,6 +43,11 @@ int match()
         {
             break;
             // ye pura while loop se bahar nikal jaega aur main menu pr chala jaega
+        }
+        else if (user == 'T' || user == 't')
+        {
+            // will add the stats soon
+            continue;
         }
         else if (user == comp)
         {
