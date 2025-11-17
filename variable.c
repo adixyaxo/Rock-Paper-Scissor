@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "game.c"
-//imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
+// imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 
 char umove()
 {
@@ -15,16 +15,33 @@ char umove()
 int cmove()
 {
     srand(time(NULL));
+    // ye line random number ko time ke hisab se seed krke generate krne k liye hoti hai
     int rno = rand();
     int c = ((rand()) % 3) + 1;
+    // ye line 1 se 3 tak random number generate krne k liye hoti hai
     return c;
 }
 
 int match()
 {
-    while (modes())
+    int rounds,n;
+    if (modes()==1)
     {
-
+        rounds=1;
+        n=1;
+    }
+    else if (modes()==-1)
+    {
+        rounds=1;
+        n=0;
+    }
+    else
+    {
+        rounds=modes();
+        n=1;
+    }
+    for (int i = 0; i < rounds; i+=n)
+    {
         int user, comp;
         user = umove();
         comp = cmove();
@@ -57,8 +74,8 @@ int match()
         else if ((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2) || (user == 'R' && comp == 3) || (user == 'P' && comp == 1) || (user == 'S' && comp == 2))
         {
             return 1;
-            // user win condition 
-            //yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
+            // user win condition
+            // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
         }
         else
         {
