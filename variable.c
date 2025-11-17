@@ -16,12 +16,25 @@ int cmove() {
     return c;
 }
 
-int main()
-{
-    printf("%d",cmove());
-    printf("%d",cmove());
-    printf("%d",cmove());
-    printf("%d",cmove());
-    printf("%d",cmove());
+int match(){
+    int user, comp;
+    while(1){
+        user = umove();
+        if(user == 0){
+            printf("Exiting the game.....\n");
+            break;
+        }
+        comp = cmove();
+        printf("Computer chose: %d\n", comp);
+        if(user == comp){
+            printf("It's a tie\n");
+        }
+        else if((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2)){
+            printf("You win\n");
+        }
+        else{
+            printf("Computer win\n");
+        }
+    }
     return 0;
 }
