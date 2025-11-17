@@ -1,40 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-int umove() {
-    int u;
-    printf("Play your moves\nEnter 1 for rock\nEnter 2 for paper\nEnter 3 for scissor\nEnter 0 to exit game\n\t:");
-    scanf("%d", &u);
+#include "game.c"
+char umove()
+{
+    char u;
+    printf("Play your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter Q to exit game\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\n\t:");
+    scanf("%c", &u);
     return u;
 }
 
-int cmove() {
+int cmove()
+{
     srand(time(NULL));
-    int rno= rand();
+    int rno = rand();
     int c = ((rand()) % 3) + 1;
     return c;
 }
 
-int match(){
-    int user, comp;
-    while(1){
+int match()
+{
+    while (modes())
+    {
+
+        int user, comp;
         user = umove();
-        if(user == 0){
-            printf("Exiting the game.....\n");
-            break;
-        }
         comp = cmove();
         printf("Computer chose: %d\n", comp);
-        if(user == comp){
-            printf("It's a tie\n");
+        if (user == 27)
+        {
+            exit(0);
+            // learned about exit function also about the asscii value of esc key
         }
-        else if((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2)){
-            printf("You win\n");
+        else if (user == 'Q' || user == 'q')
+        {
+            continue;
+            // loop ko continue kreaga aur ye game skip ho kr next game chal jaega
         }
-        else{
-            printf("Computer win\n");
+        else if (user == 'M' || user == 'm')
+        {
+            break;
+            // ye pura while loop se bahar nikal jaega aur main menu pr chala jaega
+        }
+        else if (user == comp)
+        {
+            return 0;
+            // tie condition
+        }
+        else if ((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2) || (user == 'R' && comp == 3) || (user == 'P' && comp == 1) || (user == 'S' && comp == 2))
+        {
+            return 1;
+            // user win condition 
+            //yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
+        }
+        else
+        {
+            return -1;
+            // user lose condition
         }
     }
-    return 0;
 }
