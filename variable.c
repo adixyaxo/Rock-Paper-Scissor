@@ -7,8 +7,8 @@
 char umove()
 {
     char u;
-    printf("Play your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\n\t:");
-    scanf("%c", &u);
+    printf("\n\nPlay your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
+    scanf(" %c",&u);
     return u;
 }
 
@@ -17,7 +17,7 @@ int cmove()
     srand(time(NULL));
     // ye line random number ko time ke hisab se seed krke generate krne k liye hoti hai
     int rno = rand();
-    int c = ((rand()) % 3) + 1;
+    int c = ((rno) % 3) + 1;
     // ye line 1 se 3 tak random number generate krne k liye hoti hai
     return c;
 }
@@ -25,19 +25,20 @@ int cmove()
 int match()
 {
     int rounds,n;
-    if (modes()==1)
+    int mode=modes();
+    if (mode==1)
     {
         rounds=1;
         n=1;
     }
-    else if (modes()==-1)
+    else if (mode==-1)
     {
         rounds=1;
         n=0;
     }
     else
     {
-        rounds=modes();
+        rounds=mode;
         n=1;
     }
     for (int i = 0; i < rounds; i+=n)
@@ -68,18 +69,18 @@ int match()
         }
         else if (user == comp)
         {
-            return 0;
+            printf("This is a tie\n");
             // tie condition
         }
         else if ((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2) || (user == 'R' && comp == 3) || (user == 'P' && comp == 1) || (user == 'S' && comp == 2))
         {
-            return 1;
+            printf("You Win\n");
             // user win condition
             // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
         }
         else
         {
-            return -1;
+            printf("You Lost\n");
             // user lose condition
         }
     }

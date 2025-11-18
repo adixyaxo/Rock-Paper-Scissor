@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
+void stat() {
     
 
-    return 0;
+
 }

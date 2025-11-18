@@ -1,75 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include "variable.c"
+//#include "game.c"
+#include "stats.c"
 
-// THIS IS A ROCK PAPER SCISSOR GAME
-
-int main()
-{
-    
-    while (1)
-    {
-        if (p > 3 || p < 0)
-        {
-            printf("You entered a wrong value please enter again\n\n");
-            continue;
-        }
-        if (p == 0)
-        {
-            printf("EXITING GAME......");
-            break;
-        }
-
-        printf("YOUR MOVE:");
-
-        switch (p)
-        {
-        case 1:
-            printf("ROCK");
-            break;
-        case 2:
-            printf("PAPER");
-            break;
-        case 3:
-            printf("SCISSOR");
-            break;
-        }
-
-        printf("\nCOMPUTERS MOVE:");
-        switch (c)
-        {
-        case 1:
-            printf("ROCK");
-            break;
-        case 2:
-            printf("PAPER");
-            break;
-        case 3:
-            printf("SCISSOR");
-            break;
-        }
-        printf("\n\n");
-        if (c == 3 && p == 1)
-        {
-            printf("You won\n\n");
-            continue;
-        }
-        else if (1)
-        {
-            printf("You won\n\n");
-            continue;
-        }
-        else if (p > c)
-        {
-            printf("You won\n\n");
-            continue;
-        }
-        else
-        {
-            printf("You lost\n\n");
-            continue;
-        }
-    }
-
-    return 0;
+int main() {
+    return match();
 }
+
+//ERRORS ENCOUNTERED DURING COMPILATION
+//In file included from main.c:4:0:
+// game.c:4:5: error: redefinition of 'modes'
+//  int modes() {
+//      ^~~~~
+// In file included from variable.c:4:0,
+//                  from main.c:3:
+// game.c:4:5: note: previous definition of 'modes' was here
+//  int modes() {
+//      ^~~~~

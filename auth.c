@@ -5,5 +5,4 @@ typedef struct auth
 {
     char *name;
     char *password;
-    
 };

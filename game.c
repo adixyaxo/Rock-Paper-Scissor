@@ -23,12 +23,18 @@ int modes() {
     else
     {
         printf("Invalid Choice, Please choose again\n");
-        return(modes());
+        modes();
     }
 }
-int rounds() {
-    int r;
-    printf("Enter number of rounds you want to play: ");
-    scanf("%d", &r);
-    return r;
-}
+
+
+//ERRORS ENCOUNTERED DURING COMPILATION
+//In file included from main.c:4:0:
+// game.c:4:5: error: redefinition of 'modes'
+//  int modes() {
+//      ^~~~~
+// In file included from variable.c:4:0,
+//                  from main.c:3:
+// game.c:4:5: note: previous definition of 'modes' was here
+//  int modes() {
+//      ^~~~~
