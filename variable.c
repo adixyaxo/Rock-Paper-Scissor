@@ -8,7 +8,7 @@ char umove()
 {
     char u;
     printf("\n\nPlay your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
-    scanf(" %c",&u);
+    scanf(" %c", &u);
     return u;
 }
 
@@ -24,30 +24,43 @@ int cmove()
 
 int match()
 {
-    int rounds,n;
-    int mode=modes();
-    if (mode==1)
+    int rounds, n;
+    int mode = modes();
+    if (mode == 1)
     {
-        rounds=1;
-        n=1;
+        rounds = 1;
+        n = 1;
     }
-    else if (mode==-1)
+    else if (mode == -1)
     {
-        rounds=1;
-        n=0;
+        rounds = 1;
+        n = 0;
     }
     else
     {
-        rounds=mode;
-        n=1;
+        rounds = mode;
+        n = 1;
     }
-    for (int i = 0; i < rounds; i+=n)
+    for (int i = 0; i < rounds; i += n)
     {
         int user, comp;
         user = umove();
         comp = cmove();
         printf("Computer chose: %d\n", comp);
-        if (user == 27)
+
+
+        if (user != '1' && user != '2' && user != '3' &&
+            user != 'R' && user != 'P' && user != 'S' &&
+            user != 'r' && user != 'p' && user != 's' &&
+            user != 'M' && user != 'Q' && user != 'T' &&
+            user != 'm' && user != 'q' && user != 't' &&
+            user != 27)
+        {
+            printf("Invalid input \n Please try again\n");
+            continue;
+            // agar user kuch aur input krta hai jo nahi hai options me to repeat ho jaega loop
+        }
+        else if (user == 27)
         {
             exit(0);
             // learned about exit function also about the asscii value of esc key
@@ -72,7 +85,7 @@ int match()
             printf("This is a tie\n");
             // tie condition
         }
-        else if ((user == 1 && comp == 3) || (user == 2 && comp == 1) || (user == 3 && comp == 2) || (user == 'R' && comp == 3) || (user == 'P' && comp == 1) || (user == 'S' && comp == 2))
+        else if ((user == '1' && comp == 3) || (user == '2' && comp == 1) || (user == '3' && comp == 2) || ((user == 'R' || user == 'r') && comp == 3) || ((user == 'P' || user == 'p') && comp == 1) || ((user == 'S' || user == 's') && comp == 2))
         {
             printf("You Win\n");
             // user win condition
