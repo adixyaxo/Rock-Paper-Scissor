@@ -9,12 +9,4 @@ int main() {
 }
 
 //ERRORS ENCOUNTERED DURING COMPILATION
-//In file included from main.c:4:0:
-// game.c:4:5: error: redefinition of 'modes'
-//  int modes() {
-//      ^~~~~
-// In file included from variable.c:4:0,
-//                  from main.c:3:
-// game.c:4:5: note: previous definition of 'modes' was here
-//  int modes() {
-//      ^~~~~
+//There was an error orignated due to the space not left in before scanning the character in the scanf befor %c

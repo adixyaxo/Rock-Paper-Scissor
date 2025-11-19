@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 #include "game.c"
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 
@@ -9,6 +10,7 @@ char umove()
     char u;
     printf("\n\nPlay your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
     scanf(" %c", &u);
+    sleep(1);
     return u;
 }
 
@@ -57,21 +59,25 @@ int match()
             user != 27)
         {
             printf("Invalid input \n Please try again\n");
+            sleep(1);
             continue;
             // agar user kuch aur input krta hai jo nahi hai options me to repeat ho jaega loop
         }
         else if (user == 27)
         {
+            printf("Exiting the game...\n");
             exit(0);
             // learned about exit function also about the asscii value of esc key
         }
         else if (user == 'Q' || user == 'q')
         {
+            printf("Skipping to next round...\n");
             continue;
             // loop ko continue kreaga aur ye game skip ho kr next game chal jaega
         }
         else if (user == 'M' || user == 'm')
         {
+            printf("Returning to Main Menu...\n");
             break;
             // ye pura while loop se bahar nikal jaega aur main menu pr chala jaega
         }
@@ -82,18 +88,21 @@ int match()
         }
         else if (user == comp)
         {
-            printf("This is a tie\n");
+            printf("\nThis is a tie\n");
+            sleep(2);
             // tie condition
         }
         else if ((user == '1' && comp == 3) || (user == '2' && comp == 1) || (user == '3' && comp == 2) || ((user == 'R' || user == 'r') && comp == 3) || ((user == 'P' || user == 'p') && comp == 1) || ((user == 'S' || user == 's') && comp == 2))
         {
-            printf("You Win\n");
+            printf("\nCongratulations You Win\n");
+            Sleep(2);
             // user win condition
             // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
         }
         else
         {
-            printf("You Lost\n");
+            printf("\nYou Lost\n"); 
+            sleep(2);
             // user lose condition
         }
     }
