@@ -5,6 +5,7 @@
 #include "stats.c"
 
 int main() {
+    reset();
     return match();
 }
 

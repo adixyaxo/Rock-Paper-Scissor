@@ -26,6 +26,7 @@ int cmove()
 
 int match()
 {
+    p1.gamesplayed += 1;
     int rounds, n;
     int mode = modes();
     if (mode == 1)
@@ -83,18 +84,20 @@ int match()
         }
         else if (user == 'T' || user == 't')
         {
-            // will add the stats soon
+            displaystats();
             continue;
         }
         else if (user == comp)
         {
             printf("\nThis is a tie\n");
+            p1.ties += 1;
             sleep(2);
             // tie condition
         }
         else if ((user == '1' && comp == 3) || (user == '2' && comp == 1) || (user == '3' && comp == 2) || ((user == 'R' || user == 'r') && comp == 3) || ((user == 'P' || user == 'p') && comp == 1) || ((user == 'S' || user == 's') && comp == 2))
         {
             printf("\nCongratulations You Win\n");
+            p1.wins += 1;
             Sleep(2);
             // user win condition
             // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
@@ -102,8 +105,10 @@ int match()
         else
         {
             printf("\nYou Lost\n"); 
+            p1.losses+=1;
             sleep(2);
             // user lose condition
         }
+        p1.roundsplayed += 1; // last me lagaya hai taki round khelne ke baad hi round count regester ho
     }
 }
