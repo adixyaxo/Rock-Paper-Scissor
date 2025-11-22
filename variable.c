@@ -28,6 +28,7 @@ int cmove()
 
 int match()
 {
+    newold();
     user.no_matches += 1;
     int rounds, n;
     difficulty();
@@ -56,6 +57,9 @@ int match()
         user_move = umove();
         comp = cmove();
 
+        // checking for esc
+        int usmove=user_move;
+
         printf("Computer chose: %d\n", comp);
 
         if (user_move != '1' && user_move != '2' && user_move != '3' &&
@@ -69,7 +73,7 @@ int match()
             sleep(1);
             continue;
         }
-        else if (user_move == 27) // ESC
+        else if (usmove == 27) // ESC
         {
             printf("Exiting the game...\n");
             exit(0);
@@ -98,7 +102,7 @@ int match()
         {
             printf("\nRESULT :: This is a tie\n");
             tie();
-            sleep(2);
+            sleep(1);
         }
         else if (
             (user_move == '1' && comp == 3) ||
@@ -110,15 +114,17 @@ int match()
         {
             printf("\nRESULT :: Congratulations You Win\n");
             win();
-            sleep(2);
+            sleep(1);
         }
         else
         {
             printf("\nRESULT :: You Lost\n");
             lost();
-            sleep(2);
+            sleep(1);
         }
         user.no_rounds += 1;
+        highscore();
+        logout();
     }
     return 0;
 }

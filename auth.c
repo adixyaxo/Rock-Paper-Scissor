@@ -181,7 +181,22 @@ int verify(char name[], char password[])
 
 void logout()
 {
-    user.name[0] = '\0';
-    user.password[0] = '\0';
-    printf("Logged out successfully\n");
+    FILE *fptr = fopen(user.name, "w");
+    if (!fptr)
+    {
+        printf("Error opening user file for logout.\n");
+        return;
+    }
+
+    fprintf(fptr, "%s\n", user.name);
+    fprintf(fptr, "%s\n", user.password);
+    fprintf(fptr, "%d\n", user.high_score);
+    fprintf(fptr, "%d\n", user.no_matches);
+    fprintf(fptr, "%d\n", user.no_rounds);
+    fprintf(fptr, "%d\n", user.wins);
+    fprintf(fptr, "%d\n", user.losses);
+    fprintf(fptr, "%d\n", user.ties);
+    fclose(fptr);
+
+    printf("User %s logged out successfully.\n", user.name);
 }

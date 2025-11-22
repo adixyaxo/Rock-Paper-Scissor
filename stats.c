@@ -22,7 +22,7 @@ for every loss user gets 0 points
 int difficulty_level;
 void difficulty() {
     int n;
-    printf("Choose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
+    printf("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
     scanf("%d",&n);
     printf("\n\n");
     if (n==1 || n==2 || n==3)
@@ -76,6 +76,15 @@ void tie()
     }
     
 }
+
+void highscore()
+{
+    if (user.score > user.high_score)
+    {
+        user.high_score = user.score;
+    }
+}
+
 
 void displaystats()
 {
