@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "auth.c"
+
 // this is the file which would handle all the onging stats and update them accordingly
 /*
 HARD MODE
@@ -18,18 +19,32 @@ for every win user gets 10 points
 for every tie user gets 5 points
 for every loss user gets 0 points
 */
+int difficulty_level;
+void difficulty() {
+    int n;
+    printf("Choose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
+    scanf("%d",&n);
+    printf("\n\n");
+    if (n==1 || n==2 || n==3)
+    {
+        difficulty_level=n;
+    }
+    else
+    {
+        printf("Invalid Choice, Please choose again\n");
+        difficulty();
+    }
+}
 
 void win()
 {
     user.wins += 1;
-    int difficulty_level = difficulty();
     user.score += 10;
 }
 
 void lost()
 {
     user.losses += 1;
-    int difficulty_level = difficulty();
     if (difficulty_level == 1)
     {
         user.score -= 10;
@@ -47,7 +62,6 @@ void lost()
 void tie()
 {
     user.ties += 1;
-    int difficulty_level = difficulty();
     if (difficulty_level == 1)
     {
         user.score += 0;

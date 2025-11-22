@@ -10,7 +10,7 @@
 char umove()
 {
     char u;
-    printf("\n\nPlay your moves\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
+    printf("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
     scanf(" %c", &u);
     sleep(1);
     return u;
@@ -30,6 +30,7 @@ int match()
 {
     user.no_matches += 1;
     int rounds, n;
+    difficulty();
     int mode = modes();
     if (mode == 1)
     {
@@ -95,7 +96,7 @@ int match()
                  ((user_move == 'P' || user_move == 'p') && comp == 2) ||
                  ((user_move == 'S' || user_move == 's') && comp == 3))
         {
-            printf("\nThis is a tie\n");
+            printf("\nRESULT :: This is a tie\n");
             tie();
             sleep(2);
         }
@@ -107,13 +108,13 @@ int match()
             ((user_move == 'P' || user_move == 'p') && comp == 1) ||
             ((user_move == 'S' || user_move == 's') && comp == 2))
         {
-            printf("\nCongratulations You Win\n");
+            printf("\nRESULT :: Congratulations You Win\n");
             win();
             sleep(2);
         }
         else
         {
-            printf("\nYou Lost\n");
+            printf("\nRESULT :: You Lost\n");
             lost();
             sleep(2);
         }

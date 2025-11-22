@@ -4,56 +4,93 @@
 
 typedef struct
 {
-    char *name;
-    char *password;
-    int *high_score;
-    int *no_matches;
-    int *no_rounds;
-    int *wins;
-    int *losses;
-    int *ties;
-    int *score;
+    char name[50];
+    char password[50];
+    int high_score;
+    int no_matches;
+    int no_rounds;
+    int wins;
+    int losses;
+    int ties;
+    int score;
 } USER;
 
 USER user;
 
+//prototypes
+int verify(char name[], char password[]);
+void olduser();
+int authenticate();
+int newuser();
+int newold();
+void logout();
+
 // this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
-/*
 
-LINE DATA
-1 :: USERNAME
-2 :: PASSWORD
-3 :: GAMES PLAYED
-4 :: ROUNDS PLAYED
-5 :: WINS
-6 :: LOSSES
-7 :: TIES
-8 :: SCORE
+void olduser()
+{
+    FILE *fptr = fopen(user.name, "r");
+    if (!fptr)
+    {
+        printf("Error opening user file.\n");
+        return;
+    }
 
-*/
+    char line[50];
+    for (int i = 0; i < 8; i++)
+    {
+        if (fgets(line, 50, fptr) == NULL)
+            break;
+
+        switch (i)
+        {
+        case 2:
+            user.high_score = atoi(line);
+            break;
+        case 3:
+            user.no_matches = atoi(line);
+            break;
+        case 4:
+            user.no_rounds = atoi(line);
+            break;
+        case 5:
+            user.wins = atoi(line);
+            break;
+        case 6:
+            user.losses = atoi(line);
+            break;
+        case 7:
+            user.ties = atoi(line);
+            break;
+        }
+    }
+    fclose(fptr);
+}
 
 int authenticate()
 {
     char name[50];
     char password[50];
+
     printf("\nEnter Username: ");
-    scanf(" %s", name);
+    scanf(" %49s", name);
     printf("\nEnter Password: ");
-    scanf(" %s", password);
+    scanf(" %49s", password);
+
     int status = verify(name, password);
+
     if (status == 1)
     {
         printf("Welcome %s\n", name);
-        user.name = name;
-        user.password = password;
+        strcpy(user.name, name);
+        strcpy(user.password, password);
         olduser();
         return 1;
     }
     else
     {
         printf("Access Denied\nTry Again\n");
-        authenticate();
-        return 0;
+        return authenticate();
     }
 }
 
@@ -61,11 +98,19 @@ int newuser()
 {
     char name[50];
     char password[50];
+
     printf("\nEnter Username: ");
-    scanf(" %s", name);
+    scanf(" %49s", name);
     printf("\nEnter Password: ");
-    scanf(" %s", password);
+    scanf(" %49s", password);
+
     FILE *fptr = fopen(name, "w");
+    if (!fptr)
+    {
+        printf("Error creating user file.\n");
+        return 0;
+    }
+
     fprintf(fptr, "%s\n", name);
     fprintf(fptr, "%s\n", password);
     fprintf(fptr, "0\n"); // high_score
@@ -75,68 +120,13 @@ int newuser()
     fprintf(fptr, "0\n"); // losses
     fprintf(fptr, "0\n"); // ties
     fclose(fptr);
+
     printf("User Registered Successfully\n");
-    user.name = name;
-    user.password = password;
+
+    strcpy(user.name, name);
+    strcpy(user.password, password);
+
     return 1;
-}
-
-void olduser()
-{
-    // user ka existing data load krne ke liye to show realtime results
-    FILE *fptr = fopen(user.name, "r");
-    char line[50];
-    for (int i = 0; i < 8; i++)
-    {
-        fgets(line, 50, fptr);
-        switch (i)
-        {
-        // learned that atoi converts string to int
-        case 3:
-            user.high_score = atoi(line);
-            break;
-        case 4:
-            user.no_matches = atoi(line);
-            break;
-        case 5:
-            user.no_rounds = atoi(line);
-            break;
-        case 6:
-            user.wins = atoi(line);
-            break;
-        case 7:
-            user.losses = atoi(line);
-            break;
-        case 8:
-            user.ties = atoi(line);
-            break;
-        }
-    }
-    fclose(fptr);
-}
-
-int verify(char name[], char password[])
-{
-    FILE *fptr = fopen(name, "r");
-    if (fptr == NULL)
-    {
-        int choice;
-        printf("User not found\n");
-        return newold();
-    }
-    char stored_name[50];
-    char stored_password[50];
-    fgets(stored_name, 50, fptr);
-    fgets(stored_password, 50, fptr);
-    if (strcmp(name, stored_name) == 0 && strcmp(password, stored_password) == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-    fclose(fptr);
 }
 
 int newold()
@@ -144,9 +134,10 @@ int newold()
     int choice;
     printf("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ");
     scanf("%d", &choice);
+
     if (choice == 2)
     {
-        authenticate();
+        return authenticate();
     }
     else if (choice == 1)
     {
@@ -156,13 +147,41 @@ int newold()
     else
     {
         printf("Invalid Choice, Please choose again\n");
-        newold();
+        return newold();
     }
+}
+
+int verify(char name[], char password[])
+{
+    FILE *fptr = fopen(name, "r");
+    if (fptr == NULL)
+    {
+        printf("User not found\n");
+        return newold();
+    }
+
+    char stored_name[50];
+    char stored_password[50];
+
+    fgets(stored_name, 50, fptr);
+    fgets(stored_password, 50, fptr);
+
+    // Remove newlines
+    stored_name[strcspn(stored_name, "\n")] = 0;
+    stored_password[strcspn(stored_password, "\n")] = 0;
+
+    fclose(fptr);
+
+    if (strcmp(name, stored_name) == 0 && strcmp(password, stored_password) == 0)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 void logout()
 {
-    user.name = NULL;
-    user.password = NULL;
+    user.name[0] = '\0';
+    user.password[0] = '\0';
     printf("Logged out successfully\n");
 }

@@ -29,18 +29,5 @@ int modes() {
     }
 }
 
-int difficulty() {
-    int n;
-    printf("Choose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
-    scanf("%d",&n);
-    if (n==1 || n==2 || n==3)
-    {
-        return n;
-    }
-    else
-    {
-        printf("Invalid Choice, Please choose again\n");
-        difficulty();
-    }
-}
+
 
