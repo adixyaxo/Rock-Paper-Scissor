@@ -13,9 +13,25 @@ typedef struct
     int *wins;
     int *losses;
     int *ties;
+    int *score;
 }USER;
 
 USER user;
+
+//this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
+/*
+
+LINE DATA
+1 :: USERNAME
+2 :: PASSWORD
+3 :: GAMES PLAYED
+4 :: ROUNDS PLAYED
+5 :: WINS
+6 :: LOSSES
+7 :: TIES
+8 :: SCORE
+
+*/
 
 int newold()
 {
@@ -144,6 +160,7 @@ void olduser()
     }
     fclose(fptr);
 }
+
 
 void logout()
 {

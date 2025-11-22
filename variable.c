@@ -28,7 +28,7 @@ int cmove()
 
 int match()
 {
-    p1.gamesplayed += 1;
+    user.no_matches += 1;
     int rounds, n;
     int mode = modes();
     if (mode == 1)
