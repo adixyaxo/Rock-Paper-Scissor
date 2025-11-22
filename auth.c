@@ -80,7 +80,7 @@ int newuser()
 }
 
 
-void authenticate()
+int authenticate()
 {
     char name[50];
     char password[50];
@@ -95,15 +95,17 @@ void authenticate()
         user.name = name;
         user.password = password;
         olduser();
+        return 1;
     }
     else
     {
         printf("Access Denied\nTry Again\n");
         authenticate();
+        return 0;
     }
 }
 
-int verify(name,password)
+int verify(char name[],char password[])
 {
     FILE *fptr = fopen(name,"r");
     if (fptr == NULL)
@@ -137,18 +139,18 @@ void olduser()
         fgets(line,50,fptr);
         switch(i)
         {
+            //learned that atoi converts string to int
             case 3:
-                user.high_score = line;
+                user.high_score = atoi(line);
                 break;
             case 4:
-                user.no_matches = line;
+                user.no_matches = atoi(line);
                 break;
             case 5:
-                user.no_rounds = line;
+                user.no_rounds = atoi(line);
                 break;
             case 6:
-                int LINE=line;
-                user.wins = LINE;
+                user.wins = atoi(line);
                 break;
             case 7:
                 user.losses = atoi(line);
