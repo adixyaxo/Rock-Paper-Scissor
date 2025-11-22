@@ -3,6 +3,8 @@
 #include <time.h>
 #include <windows.h>
 #include "game.c"
+#include "stats.c"
+#include <unistd.h>
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 
 char umove()
@@ -51,7 +53,6 @@ int match()
         comp = cmove();
         printf("Computer chose: %d\n", comp);
 
-
         if (user != '1' && user != '2' && user != '3' &&
             user != 'R' && user != 'P' && user != 'S' &&
             user != 'r' && user != 'p' && user != 's' &&
@@ -98,7 +99,7 @@ int match()
         {
             printf("\nCongratulations You Win\n");
             p1.wins += 1;
-            Sleep(2);
+            sleep(2);
             // user win condition
             // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
         }

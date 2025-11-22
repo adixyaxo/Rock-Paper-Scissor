@@ -22,7 +22,6 @@ void reset()
     p1.ties = 0;
 }
 
-/* display current stats */
 void displaystats()
 {
     printf("Games Played: %d\n", p1.gamesplayed);

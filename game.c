@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
+#include <windows.h>
+#include <unistd.h>
 int modes() {
-    int n,m;
+    int n;
     printf("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n");
-    scanf("%d", &n);
+    scanf("%d",&n);
     if (n==1)
     {
         return -1;
@@ -28,13 +30,3 @@ int modes() {
 }
 
 
-//ERRORS ENCOUNTERED DURING COMPILATION
-//In file included from main.c:4:0:
-// game.c:4:5: error: redefinition of 'modes'
-//  int modes() {
-//      ^~~~~
-// In file included from variable.c:4:0,
-//                  from main.c:3:
-// game.c:4:5: note: previous definition of 'modes' was here
-//  int modes() {
-//      ^~~~~

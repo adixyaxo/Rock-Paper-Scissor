@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "variable.c"
 //#include "game.c"
-#include "stats.c"
+#include <unistd.h>
 
 int main() {
     reset();
