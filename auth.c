@@ -7,7 +7,12 @@ typedef struct
 {
     char *name;
     char *password;
-    int *score;
+    int *high_score;
+    int *no_matches;
+    int *no_rounds;
+    int *wins;
+    int *losses;
+    int *ties;
 }USER;
 
 USER user;
