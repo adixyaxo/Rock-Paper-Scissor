@@ -46,70 +46,78 @@ int match()
         rounds = mode;
         n = 1;
     }
+
     for (int i = 0; i < rounds; i += n)
     {
-        int user, comp;
-        user = umove();
+        char user_move;
+        int comp;
+
+        user_move = umove();
         comp = cmove();
+
         printf("Computer chose: %d\n", comp);
 
-        if (user != '1' && user != '2' && user != '3' &&
-            user != 'R' && user != 'P' && user != 'S' &&
-            user != 'r' && user != 'p' && user != 's' &&
-            user != 'M' && user != 'Q' && user != 'T' &&
-            user != 'm' && user != 'q' && user != 't' &&
-            user != 27)
+        if (user_move != '1' && user_move != '2' && user_move != '3' &&
+            user_move != 'R' && user_move != 'P' && user_move != 'S' &&
+            user_move != 'r' && user_move != 'p' && user_move != 's' &&
+            user_move != 'M' && user_move != 'Q' && user_move != 'T' &&
+            user_move != 'm' && user_move != 'q' && user_move != 't' &&
+            user_move != 27)
         {
             printf("Invalid input \n Please try again\n");
             sleep(1);
             continue;
-            // agar user kuch aur input krta hai jo nahi hai options me to repeat ho jaega loop
         }
-        else if (user == 27)
+        else if (user_move == 27) // ESC
         {
             printf("Exiting the game...\n");
             exit(0);
-            // learned about exit function also about the asscii value of esc key
         }
-        else if (user == 'Q' || user == 'q')
+        else if (user_move == 'Q' || user_move == 'q')
         {
             printf("Skipping to next round...\n");
             continue;
-            // loop ko continue kreaga aur ye game skip ho kr next game chal jaega
         }
-        else if (user == 'M' || user == 'm')
+        else if (user_move == 'M' || user_move == 'm')
         {
             printf("Returning to Main Menu...\n");
             break;
-            // ye pura while loop se bahar nikal jaega aur main menu pr chala jaega
         }
-        else if (user == 'T' || user == 't')
+        else if (user_move == 'T' || user_move == 't')
         {
             displaystats();
             continue;
         }
-        else if (user == comp)
+        else if ((user_move == '1' && comp == 1) ||
+                 (user_move == '2' && comp == 2) ||
+                 (user_move == '3' && comp == 3) ||
+                 ((user_move == 'R' || user_move == 'r') && comp == 1) ||
+                 ((user_move == 'P' || user_move == 'p') && comp == 2) ||
+                 ((user_move == 'S' || user_move == 's') && comp == 3))
         {
             printf("\nThis is a tie\n");
-            p1.ties += 1;
+            tie();
             sleep(2);
-            // tie condition
         }
-        else if ((user == '1' && comp == 3) || (user == '2' && comp == 1) || (user == '3' && comp == 2) || ((user == 'R' || user == 'r') && comp == 3) || ((user == 'P' || user == 'p') && comp == 1) || ((user == 'S' || user == 's') && comp == 2))
+        else if (
+            (user_move == '1' && comp == 3) ||
+            (user_move == '2' && comp == 1) ||
+            (user_move == '3' && comp == 2) ||
+            ((user_move == 'R' || user_move == 'r') && comp == 3) ||
+            ((user_move == 'P' || user_move == 'p') && comp == 1) ||
+            ((user_move == 'S' || user_move == 's') && comp == 2))
         {
             printf("\nCongratulations You Win\n");
-            p1.wins += 1;
+            win();
             sleep(2);
-            // user win condition
-            // yahan par hamne ascii values ka use nahi kra cause char apne aap convert hore the
         }
         else
         {
-            printf("\nYou Lost\n"); 
-            p1.losses+=1;
+            printf("\nYou Lost\n");
+            lost();
             sleep(2);
-            // user lose condition
         }
-        p1.roundsplayed += 1; // last me lagaya hai taki round khelne ke baad hi round count regester ho
+        user.no_rounds += 1;
     }
+    return 0;
 }
