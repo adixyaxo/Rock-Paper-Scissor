@@ -17,7 +17,6 @@ typedef struct
 
 USER user;
 
-
 int newold()
 {
     int choice;
@@ -25,7 +24,7 @@ int newold()
     scanf("%d", &choice);
     if (choice==2)
     {
-        return authenticate();
+        authenticate();
     }
     else if (choice==1)
     {
@@ -40,7 +39,6 @@ int newold()
 }
 
 
-
 int newuser()
 {
     char name[50];
@@ -52,6 +50,12 @@ int newuser()
     FILE *fptr = fopen(name,"w");
     fprintf(fptr, "%s\n", name);
     fprintf(fptr, "%s\n", password);
+    fprintf(fptr, "0\n"); //high_score
+    fprintf(fptr, "0\n"); //no_matches
+    fprintf(fptr, "0\n"); //no_rounds
+    fprintf(fptr, "0\n"); //wins
+    fprintf(fptr, "0\n"); //losses
+    fprintf(fptr, "0\n"); //ties
     fclose(fptr);
     printf("User Registered Successfully\n");
     user.name = name;
@@ -60,7 +64,7 @@ int newuser()
 }
 
 
-int authenticate()
+void authenticate()
 {
     char name[50];
     char password[50];
@@ -74,13 +78,13 @@ int authenticate()
         printf("Welcome %s\n", name);
         user.name = name;
         user.password = password;
+        olduser();
     }
     else
     {
         printf("Access Denied\nTry Again\n");
         authenticate();
     }
-    return status;
 }
 
 int verify(name,password)
@@ -105,4 +109,45 @@ int verify(name,password)
         return 0;
     }
     fclose(fptr);
+}
+
+void olduser()
+{
+    // user ka existing data load krne ke liye to show realtime results
+    FILE *fptr = fopen(user.name,"r");
+    char line[50];
+    for (int i = 0; i < 8; i++)
+    {
+        fgets(line,50,fptr);
+        switch(i)
+        {
+            case 3:
+                user.high_score = line;
+                break;
+            case 4:
+                user.no_matches = line;
+                break;
+            case 5:
+                user.no_rounds = line;
+                break;
+            case 6:
+                int LINE=line;
+                user.wins = LINE;
+                break;
+            case 7:
+                user.losses = atoi(line);
+                break;
+            case 8:
+                user.ties = atoi(line);
+                break;
+        }
+    }
+    fclose(fptr);
+}
+
+void logout()
+{
+    user.name = NULL;
+    user.password = NULL;
+    printf("Logged out successfully\n");
 }
