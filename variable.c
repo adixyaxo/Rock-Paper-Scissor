@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
-#include "game.c"
 #include "stats.c"
 #include <unistd.h>
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
@@ -58,7 +57,7 @@ int match()
         comp = cmove();
 
         // checking for esc
-        int usmove=user_move;
+        int usmove = user_move;
 
         printf("Computer chose: %d\n", comp);
 
@@ -127,4 +126,114 @@ int match()
         logout();
     }
     return 0;
+}
+
+int multiplayer()
+{
+    int rounds, n;
+    difficulty();
+    int mode = modes();
+    if (mode == 1)
+    {
+        rounds = 1;
+        n = 1;
+    }
+    else if (mode == -1)
+    {
+        rounds = 1;
+        n = 0;
+    }
+    else
+    {
+        rounds = mode;
+        n = 1;
+    }
+    for (int i = 0; i < rounds; i += n)
+    {
+        char p1_move;
+        char p2_move;
+
+        printf(" %s, enter your move: ", player1.name);
+        p1_move = umove();
+        system("cls"); // Clear krdega screen ko taki player 2 ko pata na chale ki player 1 ne kya choose kiya hai
+        printf(" %s, enter your move: ", player2.name);
+        p2_move = umove();
+        system("cls");
+
+        printf("%s chose: %c\n", player1.name, p1_move);
+        printf("%s chose: %c\n", player2.name, p2_move);
+        // checking for esc
+        int us1move = p1_move;
+        int us2move = p2_move;
+
+        if ((p1_move != '1' && p1_move != '2' && p1_move != '3' &&
+             p1_move != 'R' && p1_move != 'P' && p1_move != 'S' &&
+             p1_move != 'r' && p1_move != 'p' && p1_move != 's' &&
+             p1_move != 'M' && p1_move != 'Q' && p1_move != 'T' &&
+             p1_move != 'm' && p1_move != 'q' && p1_move != 't' &&
+             p1_move != 27) ||
+            (p2_move != '1' && p2_move != '2' && p2_move != '3' &&
+             p2_move != 'R' && p2_move != 'P' && p2_move != 'S' &&
+             p2_move != 'r' && p2_move != 'p' && p2_move != 's' &&
+             p2_move != 'M' && p2_move != 'Q' && p2_move != 'T' &&
+             p2_move != 'm' && p2_move != 'q' && p2_move != 't' &&
+             p2_move != 27))
+        {
+            printf("Invalid input \n Please try again\n");
+            sleep(1);
+            continue;
+        }
+        else if (us1move == 27 || us2move == 27) // ESC
+        {
+            printf("Exiting the game...\n");
+            exit(0);
+        }
+        else if (p1_move == 'Q' || p1_move == 'q' ||
+                 p2_move == 'Q' || p2_move == 'q')
+        {
+            printf("Skipping to next round...\n");
+            continue;
+        }
+        else if (p1_move == 'M' || p1_move == 'm' ||
+                 p2_move == 'M' || p2_move == 'm')
+        {
+            printf("Returning to Main Menu...\n");
+            break;
+        }
+        else if (p1_move == 'T' || p1_move == 't' ||
+                 p2_move == 'T' || p2_move == 't')
+        {
+            mdisplaystats();
+            continue;
+        }
+        else if ((p1_move == '1' && p2_move == '1') ||
+                 (p1_move == '2' && p2_move == '2') ||
+                 (p1_move == '3' && p2_move == '3') ||
+                 ((p1_move == 'R' || p1_move == 'r') && p2_move == '1') ||
+                 ((p1_move == 'P' || p1_move == 'p') && p2_move == '2') ||
+                 ((p1_move == 'S' || p1_move == 's') && p2_move == '3'))
+        {
+            printf("\nRESULT :: This is a tie\n");
+            mtie();
+            sleep(1);
+        }
+        else if (
+            (p1_move == '1' && p2_move == '3') ||
+            (p1_move == '2' && p2_move == '1') ||
+            (p1_move == '3' && p2_move == '2') ||
+            ((p1_move == 'R' || p1_move == 'r') && p2_move == '3') ||
+            ((p1_move == 'P' || p1_move == 'p') && p2_move == '1') ||
+            ((p1_move == 'S' || p1_move == 's') && p2_move == '2'))
+        {
+            printf("\nRESULT :: Player 1 Wins\n");
+            mp1win();
+            sleep(1);
+        }
+        else
+        {
+            printf("\nRESULT :: Player 2 Wins\n");
+            mp2win();
+            sleep(1);
+        }
+    }
 }
