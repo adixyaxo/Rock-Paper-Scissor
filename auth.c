@@ -14,11 +14,12 @@ typedef struct
     int ties;
     int score;
 } USER;
+// extern helps to delcare variables that are defined in other files
 // for playing with cumputer
-USER user;
+extern USER user;
 // for playing multiplayer
-USER player1;
-USER player2;
+extern USER player1;
+extern USER player2;
 
 //prototypes
 int verify(char name[], char password[]);
