@@ -1,10 +1,44 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "auth.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
 // this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
+
+typedef struct
+{
+    char name[50];
+    char password[50];
+    int high_score;
+    int no_matches;
+    int no_rounds;
+    int wins;
+    int losses;
+    int ties;
+    int score;
+    int declared;
+} USER;
+
+
+USER user;      // For single player
+USER player1;   // Multiplayer
+USER player2;
+
+void declare()
+{
+    user.declared = 1;
+    player1.declared = 1;
+    player2.declared = 1;
+}
+
+int verify(char name[], char password[]);
+void olduser();
+int authenticate();
+int newuser();
+int newold();
+void logout();
+void multiusers();
+void mlogout();
 
 void olduser()
 {
@@ -189,7 +223,9 @@ void multiusers(){
 
 void mlogout()
 {
-    char filename[100] = ("%svs%s", player1.name, player2.name);
+    // char filename[100] = ("%svs%s", player1.name, player2.name);
+    char filename[100];
+    sprintf(filename, "%svs%s.txt", player1.name, player2.name);
     FILE *fptr = fopen(filename, "w");
     if (!fptr)
     {

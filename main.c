@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "variable.c"
-#include "auth.h"
 //#include "game.c"
 #include <unistd.h>
 
 int main() {
-    return match();
+    declare();
+    printf("Welcome to Rock Paper Scissor Game!\n");
+    sleep(1);
+    int mode = singleormulti();
+    if (mode == 0) {
+        match();
+    } else if (mode == 1) {
+        multiplayer();
+    }
 }
 
 //ERRORS ENCOUNTERED DURING COMPILATION

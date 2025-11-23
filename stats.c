@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "game.c"
-
 // this is the file which would handle all the onging stats and update them accordingly
 /*
 HARD MODE
@@ -19,6 +18,7 @@ for every win user gets 10 points
 for every tie user gets 5 points
 for every loss user gets 0 points
 */
+
 int difficulty_level;
 int difficulty() {
     int n;
@@ -101,7 +101,7 @@ void displaystats()
     printf("----------------------\n\n");
 }
 
-void mp1win(level)
+void mp1win(int level)
 {
     player1.wins += 1;
     player1.score += 10;
@@ -128,7 +128,7 @@ void mp1win(level)
     }
 }
 
-void mp2win(level)
+void mp2win(int level)
 {
     player2.wins += 1;
     player2.score += 10;
@@ -200,4 +200,16 @@ void mdisplaystats()
     printf("Ties: %d\n", (player2.ties));
     printf("Total Score: %d\n", (player2.score));
     printf("--------------------------\n\n");
+}
+
+void roundsplayed()
+{
+    player1.no_rounds += 1;
+    player2.no_rounds += 1;
+}
+
+void matchesplayed()
+{
+    player1.no_matches += 1;
+    player2.no_matches += 1;
 }

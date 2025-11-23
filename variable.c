@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
-#include "stats.c"
 #include <unistd.h>
+#include "stats.c"
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 
 char umove()
 {
     char u;
-    printf("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC to exit application\nPlay your move :: ");
+    printf("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC or 27 to exit application\nPlay your move :: ");
     scanf(" %c", &u);
     sleep(1);
     return u;
@@ -216,7 +216,7 @@ int multiplayer()
                  ((p1_move == 'S' || p1_move == 's') && p2_move == '3'))
         {
             printf("\nRESULT :: This is a tie\n");
-            mtie();
+            mtie(difficulty_level);
             sleep(1);
             roundsplayed();
         }
@@ -229,14 +229,14 @@ int multiplayer()
             ((p1_move == 'S' || p1_move == 's') && p2_move == '2'))
         {
             printf("\nRESULT :: Player 1 Wins\n");
-            mp1win();
+            mp1win(difficulty_level);
             sleep(1);
             roundsplayed();
         }
         else
         {
             printf("\nRESULT :: Player 2 Wins\n");
-            mp2win();
+            mp2win(difficulty_level);
             sleep(1);
             roundsplayed();
         }
