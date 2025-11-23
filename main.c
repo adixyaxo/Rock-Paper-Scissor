@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "variable.c"
+#include "auth.h"
 //#include "game.c"
 #include <unistd.h>
 

@@ -5,9 +5,7 @@
 #include "stats.c"
 #include <unistd.h>
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
-USER user;
-USER player1;
-USER player2;
+
 char umove()
 {
     char u;
