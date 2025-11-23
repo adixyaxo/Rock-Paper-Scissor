@@ -130,6 +130,7 @@ int match()
 
 int multiplayer()
 {
+    multiusers();
     int rounds, n;
     difficulty();
     int mode = modes();
@@ -148,6 +149,7 @@ int multiplayer()
         rounds = mode;
         n = 1;
     }
+    matchesplayed();
     for (int i = 0; i < rounds; i += n)
     {
         char p1_move;
@@ -216,6 +218,7 @@ int multiplayer()
             printf("\nRESULT :: This is a tie\n");
             mtie();
             sleep(1);
+            roundsplayed();
         }
         else if (
             (p1_move == '1' && p2_move == '3') ||
@@ -228,12 +231,16 @@ int multiplayer()
             printf("\nRESULT :: Player 1 Wins\n");
             mp1win();
             sleep(1);
+            roundsplayed();
         }
         else
         {
             printf("\nRESULT :: Player 2 Wins\n");
             mp2win();
             sleep(1);
+            roundsplayed();
         }
     }
+    mlogout();
+    return 0;
 }
