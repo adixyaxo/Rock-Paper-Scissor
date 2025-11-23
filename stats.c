@@ -118,4 +118,86 @@ void mp1win(level)
     {
         player2.score += 0;
     }
+        if (player1.score > player1.high_score)
+    {
+        player1.high_score = player1.score;
+    }
+    if (player2.score > player2.high_score)
+    {
+        player2.high_score = player2.score;
+    }
+}
+
+void mp2win(level)
+{
+    player2.wins += 1;
+    player2.score += 10;
+    player1.losses += 1;
+    if (level == 1)
+    {
+        player1.score -= 10;
+    }
+    else if (level == 2)
+    {
+        player1.score -= 5;
+    }
+    else if (level == 3)
+    {
+        player1.score += 0;
+    }
+        if (player1.score > player1.high_score)
+    {
+        player1.high_score = player1.score;
+    }
+    if (player2.score > player2.high_score)
+    {
+        player2.high_score = player2.score;
+    }
+}
+
+void mtie()
+{
+    player1.ties += 1;
+    player2.ties += 1;
+    if (difficulty_level == 1)
+    {
+        // no score change
+    }
+    else if (difficulty_level == 2)
+    {
+        player1.score += 1;
+        player2.score += 1;
+    }
+    else if (difficulty_level == 3)
+    {
+        player1.score += 5;
+        player2.score += 5;
+    }
+    if (player1.score > player1.high_score)
+    {
+        player1.high_score = player1.score;
+    }
+    if (player2.score > player2.high_score)
+    {
+        player2.high_score = player2.score;
+    }
+}
+
+void mdisplaystats()
+{
+    printf("\n\n----- PLAYER 1 STATS -----\n");
+    printf("Name: %s\n", player1.name);
+    printf("Wins: %d\n", (player1.wins));
+    printf("Losses: %d\n", (player1.losses));
+    printf("Ties: %d\n", (player1.ties));
+    printf("Total Score: %d\n", (player1.score));
+    printf("--------------------------\n\n");
+
+    printf("\n\n----- PLAYER 2 STATS -----\n");
+    printf("Name: %s\n", player2.name);
+    printf("Wins: %d\n", (player2.wins));
+    printf("Losses: %d\n", (player2.losses));
+    printf("Ties: %d\n", (player2.ties));
+    printf("Total Score: %d\n", (player2.score));
+    printf("--------------------------\n\n");
 }
