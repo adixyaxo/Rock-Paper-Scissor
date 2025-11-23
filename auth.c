@@ -14,8 +14,11 @@ typedef struct
     int ties;
     int score;
 } USER;
-
+// for playing with cumputer
 USER user;
+// for playing multiplayer
+USER player1;
+USER player2;
 
 //prototypes
 int verify(char name[], char password[]);
@@ -24,7 +27,8 @@ int authenticate();
 int newuser();
 int newold();
 void logout();
-
+void multiusers();
+void mlogout();
 // this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
 
 void olduser()
@@ -199,4 +203,39 @@ void logout()
     fclose(fptr);
 
     printf("User %s logged out successfully.\n", user.name);
+}
+
+void multiusers(){
+    printf("Player 1, please enter your name: ");
+    scanf("%s", player1.name);
+    printf("Player 2, please enter your name: ");
+    scanf("%s", player2.name);
+}
+
+void mlogout()
+{
+    char filename[100] = ("%svs%s", player1.name, player2.name);
+    FILE *fptr = fopen(filename, "w");
+    if (!fptr)
+    {
+        printf("Error opening users file for logout.\n");
+        return;
+    }
+    fprintf(fptr, "NO OF MATCHES :: %d\n", player1.no_matches);
+    fprintf(fptr, "NO OF ROUNDS :: %d\n", player1.no_rounds);
+    fprintf(fptr, "----player 1 stats----\n");
+    fprintf(fptr, "NAME :: %s\n", player1.name);
+    fprintf(fptr, "HIGHSCORE:: %d\n", player1.high_score);
+    fprintf(fptr, "WINS :: %d\n", player1.wins);
+    fprintf(fptr, "LOSSES :: %d\n", player1.losses);
+    fprintf(fptr, "TIES :: %d\n", player1.ties);
+    fprintf(fptr, "SCORE :: %d\n", player1.score);
+    fprintf(fptr, "----player 2 stats----\n");
+    fprintf(fptr, "NAME :: %s\n", player2.name);
+    fprintf(fptr, "HIGHSCORE:: %d\n", player2.high_score);
+    fprintf(fptr, "WINS :: %d\n", player2.wins);
+    fprintf(fptr, "LOSSES :: %d\n", player2.losses);
+    fprintf(fptr, "TIES :: %d\n", player2.ties);
+    fprintf(fptr, "SCORE :: %d\n", player2.score);
+    fclose(fptr);
 }
