@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "auth.c"
+#include "game.c"
 
 // this is the file which would handle all the onging stats and update them accordingly
 /*
@@ -20,7 +20,7 @@ for every tie user gets 5 points
 for every loss user gets 0 points
 */
 int difficulty_level;
-void difficulty() {
+int difficulty() {
     int n;
     printf("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
     scanf("%d",&n);
@@ -28,11 +28,12 @@ void difficulty() {
     if (n==1 || n==2 || n==3)
     {
         difficulty_level=n;
+        return n;
     }
     else
     {
         printf("Invalid Choice, Please choose again\n");
-        difficulty();
+        return difficulty();
     }
 }
 
@@ -98,4 +99,23 @@ void displaystats()
     printf("Ties: %d\n", (user.ties));
     printf("Total Score: %d\n", (user.score));
     printf("----------------------\n\n");
+}
+
+void mp1win(level)
+{
+    player1.wins += 1;
+    player1.score += 10;
+    player2.losses += 1;
+    if (level == 1)
+    {
+        player2.score -= 10;
+    }
+    else if (level == 2)
+    {
+        player2.score -= 5;
+    }
+    else if (level == 3)
+    {
+        player2.score += 0;
+    }
 }
