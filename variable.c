@@ -126,8 +126,8 @@ int match()
         }
         user.no_rounds += 1;
         highscore();
-        logout();
     }
+    logout();
     return 0;
 }
 

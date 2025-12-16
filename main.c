@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
     // Enter GTK main loop
     ui_start();
-
+    mlogout();
     return 0;
 }
 

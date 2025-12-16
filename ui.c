@@ -13,6 +13,12 @@ static GtkTextBuffer *buffer;
 static gboolean input_ready = FALSE;
 static char input_buffer[512];
 
+static void play_click_sound(void)
+{
+    system("paplay /usr/share/sounds/freedesktop/stereo/message.oga &");
+}
+
+
 /* ================= CSS ================= */
 static void load_css(void)
 {
@@ -62,6 +68,8 @@ static void on_enter_pressed(GtkWidget *widget, gpointer data)
     snprintf(input_buffer, sizeof(input_buffer), "%s", text);
     input_ready = TRUE;
 
+    play_click_sound();
+
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
     GtkTextIter end;
@@ -70,6 +78,7 @@ static void on_enter_pressed(GtkWidget *widget, gpointer data)
     gtk_text_buffer_insert(buffer, &end, "➜ ", -1);
     gtk_text_buffer_insert(buffer, &end, input_buffer, -1);
     gtk_text_buffer_insert(buffer, &end, "\n", -1);
+    scroll_to_bottom();
 }
 
 /* ================= UI INIT ================= */
@@ -118,12 +127,27 @@ void ui_init(int *argc, char ***argv)
     gtk_widget_show_all(window);
 }
 
+static void scroll_to_bottom(void)
+{
+    GtkTextIter end;
+    gtk_text_buffer_get_end_iter(buffer, &end);
+    gtk_text_view_scroll_to_iter(
+        GTK_TEXT_VIEW(text_view),
+        &end,
+        0.0,
+        FALSE,
+        0,
+        0
+    );
+}
+
 /* ================= PRINT ================= */
 void printui(const char *text)
 {
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(buffer, &end);
     gtk_text_buffer_insert(buffer, &end, text, -1);
+    scroll_to_bottom();
 }
 
 /* ================= FORMAT ================= */
@@ -170,6 +194,12 @@ void scanui_str(const char *prompt, char *out, size_t out_size)
 
     snprintf(out, out_size, "%s", input_buffer);
 }
+
+void clearui(void)
+{
+    gtk_text_buffer_set_text(buffer, "", -1);
+}
+
 
 /* ================= LOOP ================= */
 void ui_start(void)
