@@ -1,8 +1,7 @@
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include "ui.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "auth.h"
 // this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
 
 typedef struct
@@ -224,7 +223,7 @@ void multiusers(){
 void mlogout()
 {
     char filename[100];
-    sprintf(filename, "%svs%s.txt", player1.name, player2.name);
+    snprintf(filename, "%svs%s.txt", player1.name, player2.name);
     FILE *fptr = fopen(filename, "w");
     if (!fptr)
     {

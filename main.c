@@ -1,19 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "variable.c"
-//#include "game.c"
-#include <unistd.h>
+#include "variable.c"  
+#include "ui.h"
 
-int main() {
+int main(int argc, char *argv[])
+{
+    ui_init(&argc, &argv);
+
     declare();
-    printf("Welcome to Rock Paper Scissor Game!\n");
-    sleep(1);
+    printui("Welcome to Rock Paper Scissor Game!\n");
+
     int mode = singleormulti();
-    if (mode == 0) {
+
+    if (mode == 0)
         match();
-    } else if (mode == 1) {
+
+    else
         multiplayer();
-    }
+
+    ui_start();
+    return 0;
 }
 
 //ERRORS ENCOUNTERED DURING COMPILATION

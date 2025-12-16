@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
 #include <unistd.h>
 #include "auth.c"
 #include "ui.h"
