@@ -1,0 +1,16 @@
+NO OF MATCHES :: 1
+NO OF ROUNDS :: 4
+----player 1 stats----
+NAME :: gangubai
+HIGHSCORE:: 0
+WINS :: 0
+LOSSES :: 4
+TIES :: 0
+SCORE :: 0
+----player 2 stats----
+NAME :: mangubai
+HIGHSCORE:: 40
+WINS :: 4
+LOSSES :: 0
+TIES :: 0
+SCORE :: 40
