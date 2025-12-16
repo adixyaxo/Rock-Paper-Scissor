@@ -4,10 +4,12 @@
 #include <windows.h>
 #include <unistd.h>
 #include "auth.c"
+#include "ui.h"
+
 int modes() {
     int n;
-    printf("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n");
-    scanf("%d",&n);
+    printui("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n");
+    scanui("%d",&n);
     if (n==1)
     {
         return -1;
@@ -15,8 +17,8 @@ int modes() {
     else if(n==2)
     {
         int nr;
-        printf("Enter number of rounds (must be odd number): ");
-        scanf("%d", &nr);
+        printui("Enter number of rounds (must be odd number): ");
+        scanui("%d", &nr);
         return nr;
     }
     else if (n==3)
@@ -25,15 +27,15 @@ int modes() {
     }
     else
     {
-        printf("Invalid Choice, Please choose again\n");
+        printui("Invalid Choice, Please choose again\n");
         modes();
     }
 }
 
 int singleormulti() {
     int n;
-    printf("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n");
-    scanf("%d",&n);
+    printui("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n");
+    scanui("%d",&n);
     if (n==1)
     {
         return 0;
@@ -44,9 +46,7 @@ int singleormulti() {
     }
     else
     {
-        printf("Invalid Choice, Please choose again\n");
+        printui("Invalid Choice, Please choose again\n");
         singleormulti();
     }
 }
-
-
