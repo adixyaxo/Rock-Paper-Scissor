@@ -4,58 +4,113 @@
 #include <string.h>
 #include "ui.h"
 
-/* ---------- GTK WIDGETS ---------- */
+/* ================= GTK WIDGETS ================= */
 static GtkWidget *window;
 static GtkWidget *text_view;
 static GtkWidget *entry;
 static GtkTextBuffer *buffer;
 
 static gboolean input_ready = FALSE;
-static char input_buffer[256];
+static char input_buffer[512];
 
-/* ---------- CALLBACK ---------- */
+/* ================= CSS ================= */
+static void load_css(void)
+{
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_data(
+        provider,
+        "* {"
+        "  font-family: 'JetBrains Mono', 'Monospace';"
+        "  font-size: 14px;"
+        "}"
+        "window {"
+        "  background: #0f1117;"
+        "}"
+        "textview {"
+        "  background: #0f1117;"
+        "  color: #e6e6e6;"
+        "  border: none;"
+        "  padding: 12px;"
+        "}"
+        "entry {"
+        "  background: #161925;"
+        "  color: #ffffff;"
+        "  border-radius: 8px;"
+        "  padding: 10px;"
+        "  border: 1px solid #2a2f45;"
+        "}"
+        "entry:focus {"
+        "  border-color: #5e81ac;"
+        "}"
+        ,
+        -1,
+        NULL
+    );
+
+    gtk_style_context_add_provider_for_screen(
+        gdk_screen_get_default(),
+        GTK_STYLE_PROVIDER(provider),
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+    );
+}
+
+/* ================= CALLBACK ================= */
 static void on_enter_pressed(GtkWidget *widget, gpointer data)
 {
     const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
-    strncpy(input_buffer, text, sizeof(input_buffer));
+
+    snprintf(input_buffer, sizeof(input_buffer), "%s", text);
     input_ready = TRUE;
 
     gtk_entry_set_text(GTK_ENTRY(entry), "");
 
-    // Echo input to log window
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(buffer, &end);
-    gtk_text_buffer_insert(buffer, &end, ">> ", -1);
+
+    gtk_text_buffer_insert(buffer, &end, "➜ ", -1);
     gtk_text_buffer_insert(buffer, &end, input_buffer, -1);
     gtk_text_buffer_insert(buffer, &end, "\n", -1);
 }
 
-/* ---------- UI INIT ---------- */
+/* ================= UI INIT ================= */
 void ui_init(int *argc, char ***argv)
 {
     gtk_init(argc, argv);
+    load_css();
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Rock Paper Scissor");
-    gtk_window_set_default_size(GTK_WINDOW(window), 600, 400);
+    gtk_window_set_title(GTK_WINDOW(window), "Rock Paper Scissors");
+    gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
+    GtkWidget *main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_container_set_border_width(GTK_CONTAINER(main_box), 12);
+    gtk_container_add(GTK_CONTAINER(window), main_box);
 
-    /* Text View (Game Log) */
+    /* -------- Output Area -------- */
     text_view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(text_view), FALSE);
+    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(text_view), FALSE);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD_CHAR);
+
     buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 
     GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(
+        GTK_SCROLLED_WINDOW(scroll),
+        GTK_POLICY_NEVER,
+        GTK_POLICY_AUTOMATIC
+    );
     gtk_container_add(GTK_CONTAINER(scroll), text_view);
-    gtk_box_pack_start(GTK_BOX(vbox), scroll, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(main_box), scroll, TRUE, TRUE, 0);
 
-    /* Input Entry */
+    /* -------- Input Area -------- */
     entry = gtk_entry_new();
-    gtk_entry_set_placeholder_text(GTK_ENTRY(entry), "Enter your choice...");
-    gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 5);
+    gtk_entry_set_placeholder_text(
+        GTK_ENTRY(entry),
+        "Type your input and press Enter"
+    );
+    gtk_box_pack_start(GTK_BOX(main_box), entry, FALSE, FALSE, 0);
 
     g_signal_connect(entry, "activate", G_CALLBACK(on_enter_pressed), NULL);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
@@ -63,7 +118,7 @@ void ui_init(int *argc, char ***argv)
     gtk_widget_show_all(window);
 }
 
-/* ---------- PRINT UI ---------- */
+/* ================= PRINT ================= */
 void printui(const char *text)
 {
     GtkTextIter end;
@@ -71,60 +126,58 @@ void printui(const char *text)
     gtk_text_buffer_insert(buffer, &end, text, -1);
 }
 
-/* ---------- FORMAT UI ---------- */
+/* ================= FORMAT ================= */
 const char *formatui(const char *fmt, ...)
 {
-    static char buffer[512]; // Static so it can be returned
+    static char buf[512];
     va_list args;
     va_start(args, fmt);
-    vsnprintf(buffer, sizeof(buffer), fmt, args);
+    vsnprintf(buf, sizeof(buf), fmt, args);
     va_end(args);
-    return buffer;
+    return buf;
 }
 
-/* ---------- SCAN UI ---------- */
-void scanui(const char *prompt, void *out)
+/* ================= SAFE INPUT ================= */
+void scanui_int(const char *prompt, int *out)
 {
-    printui(prompt);       // Print the prompt
+    printui(prompt);
     input_ready = FALSE;
 
-    // Wait for input
     while (!input_ready)
         gtk_main_iteration_do(FALSE);
 
-    // Store input based on type
-    if (((char *)out)[0] == '\0') {
-        // Default fallback if out is a string
-        strcpy((char *)out, input_buffer);
-    } else {
-        // Try to guess type: int, char, string
-        // This assumes the user passes the correct type
-        if (strchr((char *)out, '%')) {
-            // do nothing
-        }
-    }
-
-    // If the user passed an int pointer
-    if (out && strlen(input_buffer) > 0) {
-        char *endptr;
-        long val = strtol(input_buffer, &endptr, 10);
-        if (*endptr == '\0') {   // Entire string is number
-            *(int *)out = (int)val;
-        } else if (strlen(input_buffer) == 1) {
-            *(char *)out = input_buffer[0];
-        } else {
-            strcpy((char *)out, input_buffer);
-        }
-    }
+    *out = atoi(input_buffer);
 }
 
-/* ---------- START LOOP ---------- */
-void ui_start()
+void scanui_char(const char *prompt, char *out)
+{
+    printui(prompt);
+    input_ready = FALSE;
+
+    while (!input_ready)
+        gtk_main_iteration_do(FALSE);
+
+    *out = input_buffer[0];
+}
+
+void scanui_str(const char *prompt, char *out, size_t out_size)
+{
+    printui(prompt);
+    input_ready = FALSE;
+
+    while (!input_ready)
+        gtk_main_iteration_do(FALSE);
+
+    snprintf(out, out_size, "%s", input_buffer);
+}
+
+/* ================= LOOP ================= */
+void ui_start(void)
 {
     gtk_main();
 }
 
-void ui_quit()
+void ui_quit(void)
 {
     gtk_main_quit();
 }
