@@ -64,48 +64,58 @@ void ui_init(int *argc, char ***argv)
 }
 
 /* ---------- PRINT UI ---------- */
-void printui(const char *format, ...)
+void printui(const char *text)
 {
-    char text[512];
-    va_list args;
-    va_start(args, format);
-    vsnprintf(text, sizeof(text), format, args);
-    va_end(args);
-
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(buffer, &end);
     gtk_text_buffer_insert(buffer, &end, text, -1);
 }
 
-/* New formatter */
+/* ---------- FORMAT UI ---------- */
 const char *formatui(const char *fmt, ...)
 {
-    static char buffer[512];   // UI-owned buffer
-
+    static char buffer[512]; // Static so it can be returned
     va_list args;
     va_start(args, fmt);
-
     vsnprintf(buffer, sizeof(buffer), fmt, args);
-
     va_end(args);
-
     return buffer;
 }
 
 /* ---------- SCAN UI ---------- */
-void scanui(const char *format, void *out)
+void scanui(const char *prompt, void *out)
 {
+    printui(prompt);       // Print the prompt
     input_ready = FALSE;
 
+    // Wait for input
     while (!input_ready)
         gtk_main_iteration_do(FALSE);
 
-    if (strcmp(format, "%d") == 0)
-        *(int *)out = atoi(input_buffer);
-    else if (strcmp(format, "%c") == 0)
-        *(char *)out = input_buffer[0];
-    else if (strcmp(format, "%s") == 0)
+    // Store input based on type
+    if (((char *)out)[0] == '\0') {
+        // Default fallback if out is a string
         strcpy((char *)out, input_buffer);
+    } else {
+        // Try to guess type: int, char, string
+        // This assumes the user passes the correct type
+        if (strchr((char *)out, '%')) {
+            // do nothing
+        }
+    }
+
+    // If the user passed an int pointer
+    if (out && strlen(input_buffer) > 0) {
+        char *endptr;
+        long val = strtol(input_buffer, &endptr, 10);
+        if (*endptr == '\0') {   // Entire string is number
+            *(int *)out = (int)val;
+        } else if (strlen(input_buffer) == 1) {
+            *(char *)out = input_buffer[0];
+        } else {
+            strcpy((char *)out, input_buffer);
+        }
+    }
 }
 
 /* ---------- START LOOP ---------- */

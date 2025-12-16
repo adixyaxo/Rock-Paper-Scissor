@@ -1,18 +1,12 @@
 #ifndef UI_H
 #define UI_H
 
-// Initialize GTK window and widgets
 void ui_init(int *argc, char ***argv);
-
-// Start GTK loop (non-blocking game safe)
 void ui_start();
-
-// UI replacements
-void printui(const char *format, ...);
-void scanui(const char *format, void *out);
-const char *formatui(const char *fmt, ...);
-
-// Cleanup
 void ui_quit();
+
+void printui(const char *text);  // or const char *format, ... depending on final version
+const char *formatui(const char *fmt, ...);
+void scanui(const char *prompt, void *out);
 
 #endif

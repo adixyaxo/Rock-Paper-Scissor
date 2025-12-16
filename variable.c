@@ -6,6 +6,7 @@
 #include "ui.h"
 #include "variable.h"
 #include "auth.h"
+#include "game.h"
 
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 

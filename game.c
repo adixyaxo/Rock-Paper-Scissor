@@ -4,12 +4,13 @@
 #include <unistd.h>
 #include "auth.h"
 #include "ui.h"
+#include "game.h"
 
 int modes()
 {
-    char nui[1];
-    int n = nui[0];
-    scanui("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n", nui);
+    int n;
+    scanui("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n", &n);
+
     if (n == 1)
     {
         return -1;
@@ -35,8 +36,7 @@ int modes()
 int singleormulti()
 {
     int n;
-    printui("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n");
-    scanui("%d", &n);
+    scanui("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n", &n);
     if (n == 1)
     {
         return 0;
