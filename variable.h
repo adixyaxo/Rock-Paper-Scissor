@@ -2,21 +2,12 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 
-typedef struct {
-    char name[50];
-    char password[50];
-    int high_score;
-    int no_matches;
-    int no_rounds;
-    int wins;
-    int losses;
-    int ties;
-    int score;
-} Player;
-
-extern Player player1;
-extern Player player2;
+#include "auth.h"   // AI: reuse USER instead of redefining Player
 
 extern int difficulty_level;
+
+// function declarations (AI: added to avoid implicit declaration)
+int match();
+int multiplayer();
 
 #endif
