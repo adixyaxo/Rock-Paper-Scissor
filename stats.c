@@ -25,9 +25,8 @@ for every loss user gets 0 points
 int difficulty_level;
 int difficulty()
 {
-    char nui[1];
-    scanui("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n", nui);
-    int n = nui[0];
+    int n;
+    scanui("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n", &n);
     printui("\n\n");
     if (n == 1 || n == 2 || n == 3)
     {
