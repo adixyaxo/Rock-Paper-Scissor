@@ -1,12 +1,21 @@
 #ifndef UI_H
 #define UI_H
 
+#include <gtk/gtk.h>
+#include <stddef.h>
+
+/* UI lifecycle */
 void ui_init(int *argc, char ***argv);
-void ui_start();
-void ui_quit();
+void ui_start(void);
+void ui_quit(void);
 
-void printui(const char *text);  // or const char *format, ... depending on final version
+/* Output */
+void printui(const char *text);
 const char *formatui(const char *fmt, ...);
-void scanui(const char *prompt, void *out);
 
-#endif
+/* Input */
+void scanui_int(const char *prompt, int *out);
+void scanui_char(const char *prompt, char *out);
+void scanui_str(const char *prompt, char *out, size_t out_size);
+
+#endif /* UI_H */

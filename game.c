@@ -9,7 +9,7 @@
 int modes()
 {
     int n;
-    scanui("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n", &n);
+    scanui_int("Choose one game mode from the following\nSurvival Challenge :: 1\nBest of Series :: 2\nQuick Match :: 3\n", &n);
 
     if (n == 1)
     {
@@ -19,7 +19,7 @@ int modes()
     {
         int nr;
         printui("Enter number of rounds (must be odd number): ");
-        scanui("%d", &nr);
+        scanui_int("%d", &nr);
         return nr;
     }
     else if (n == 3)
@@ -36,7 +36,7 @@ int modes()
 int singleormulti()
 {
     int n;
-    scanui("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n", &n);
+    scanui_int("Choose one mode from the following\nPlay with computer :: 1\nPlay with Friend :: 2\n", &n);
     if (n == 1)
     {
         return 0;

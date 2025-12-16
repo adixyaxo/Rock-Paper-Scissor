@@ -26,7 +26,7 @@ int difficulty_level;
 int difficulty()
 {
     int n;
-    scanui("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n", &n);
+    scanui_int("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n", &n);
     printui("\n\n");
     if (n == 1 || n == 2 || n == 3)
     {

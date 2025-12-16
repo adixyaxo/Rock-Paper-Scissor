@@ -15,4 +15,5 @@ void mdisplaystats();
 void roundsplayed();
 void matchesplayed();
 
+extern int difficulty_level;
 #endif

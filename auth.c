@@ -61,8 +61,8 @@ int authenticate()
     char name[50], password[50];
 
 
-    scanui("\nEnter Username: ", name);
-    scanui("\nEnter Password: ", password);
+    scanui_str("\nEnter Username: ", name , sizeof(name));
+    scanui_str("\nEnter Password: ", password , sizeof(password));
 
     int status = verify(name, password);
 
@@ -85,8 +85,8 @@ int newuser()
 {
     char name[50], password[50];
 
-    scanui("\nEnter Username: ", name);
-    scanui("\nEnter Password: ", password);
+    scanui_str("\nEnter Username: ", name , sizeof(name));
+    scanui_str("\nEnter Password: ", password , sizeof(name));
 
     FILE *fptr = fopen(name, "w");
     if (!fptr)
@@ -108,9 +108,8 @@ int newuser()
 
 int newold()
 {
-    char choiceui[1];
-    scanui("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ", choiceui);
-    int choice = choiceui[0];
+    int choice;
+    scanui_int("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ", &choice);
 
     if (choice == 2)
         return authenticate();
@@ -162,8 +161,8 @@ void logout()
 
 void multiusers()
 {
-    scanui("Player 1, please enter your name: ",player1.name);
-    scanui("Player 2, please enter your name: ",player2.name);
+    scanui_str("Player 1, please enter your name: ",player1.name , sizeof(player1.name));
+    scanui_str("Player 2, please enter your name: ",player2.name , sizeof(player2.name));
 
 }
 
