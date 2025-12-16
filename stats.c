@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "game.c"
+#include "ui.h"
 // this is the file which would handle all the onging stats and update them accordingly
 /*
 HARD MODE
@@ -22,9 +23,9 @@ for every loss user gets 0 points
 int difficulty_level;
 int difficulty() {
     int n;
-    printf("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
-    scanf("%d",&n);
-    printf("\n\n");
+    printui("\n\nChoose one difficulty level from the following\nHard :: 1\nNormal :: 2\nEasy :: 3\n");
+    scanui("%d",&n);
+    printui("\n\n");
     if (n==1 || n==2 || n==3)
     {
         difficulty_level=n;
@@ -32,7 +33,7 @@ int difficulty() {
     }
     else
     {
-        printf("Invalid Choice, Please choose again\n");
+        printui("Invalid Choice, Please choose again\n");
         return difficulty();
     }
 }
@@ -89,16 +90,16 @@ void highscore()
 
 void displaystats()
 {
-    printf("\n\n----- YOUR STATS -----\n");
-    printf("Name: %s\n", user.name);
-    printf("High Score: %d\n", (user.high_score));
-    printf("Number of Matches Played: %d\n", (user.no_matches));
-    printf("Number of Rounds Played: %d\n", (user.no_rounds));
-    printf("Wins: %d\n", (user.wins));
-    printf("Losses: %d\n", (user.losses));
-    printf("Ties: %d\n", (user.ties));
-    printf("Total Score: %d\n", (user.score));
-    printf("----------------------\n\n");
+    printui("\n\n----- YOUR STATS -----\n");
+    printui("Name: %s\n", user.name);
+    printui("High Score: %d\n", (user.high_score));
+    printui("Number of Matches Played: %d\n", (user.no_matches));
+    printui("Number of Rounds Played: %d\n", (user.no_rounds));
+    printui("Wins: %d\n", (user.wins));
+    printui("Losses: %d\n", (user.losses));
+    printui("Ties: %d\n", (user.ties));
+    printui("Total Score: %d\n", (user.score));
+    printui("----------------------\n\n");
 }
 
 void mp1win(int level)
@@ -118,7 +119,7 @@ void mp1win(int level)
     {
         player2.score += 0;
     }
-        if (player1.score > player1.high_score)
+    if (player1.score > player1.high_score)
     {
         player1.high_score = player1.score;
     }
@@ -145,7 +146,7 @@ void mp2win(int level)
     {
         player1.score += 0;
     }
-        if (player1.score > player1.high_score)
+    if (player1.score > player1.high_score)
     {
         player1.high_score = player1.score;
     }
@@ -185,21 +186,21 @@ void mtie()
 
 void mdisplaystats()
 {
-    printf("\n\n----- PLAYER 1 STATS -----\n");
-    printf("Name: %s\n", player1.name);
-    printf("Wins: %d\n", (player1.wins));
-    printf("Losses: %d\n", (player1.losses));
-    printf("Ties: %d\n", (player1.ties));
-    printf("Total Score: %d\n", (player1.score));
-    printf("--------------------------\n\n");
+    printui("\n\n----- PLAYER 1 STATS -----\n");
+    printui("Name: %s\n", player1.name);
+    printui("Wins: %d\n", (player1.wins));
+    printui("Losses: %d\n", (player1.losses));
+    printui("Ties: %d\n", (player1.ties));
+    printui("Total Score: %d\n", (player1.score));
+    printui("--------------------------\n\n");
 
-    printf("\n\n----- PLAYER 2 STATS -----\n");
-    printf("Name: %s\n", player2.name);
-    printf("Wins: %d\n", (player2.wins));
-    printf("Losses: %d\n", (player2.losses));
-    printf("Ties: %d\n", (player2.ties));
-    printf("Total Score: %d\n", (player2.score));
-    printf("--------------------------\n\n");
+    printui("\n\n----- PLAYER 2 STATS -----\n");
+    printui("Name: %s\n", player2.name);
+    printui("Wins: %d\n", (player2.wins));
+    printui("Losses: %d\n", (player2.losses));
+    printui("Ties: %d\n", (player2.ties));
+    printui("Total Score: %d\n", (player2.score));
+    printui("--------------------------\n\n");
 }
 
 void roundsplayed()
