@@ -1,7 +1,7 @@
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include "ui.h"
 
 // this programme is going to create indivisual txt files with user data and also modify exiting user data files using read write and append modes
 
@@ -45,7 +45,7 @@ void olduser()
     FILE *fptr = fopen(user.name, "r");
     if (!fptr)
     {
-        printf("Error opening user file.\n");
+        printui("Error opening user file.\n");
         return;
     }
 
@@ -85,16 +85,16 @@ int authenticate()
     char name[50];
     char password[50];
 
-    printf("\nEnter Username: ");
-    scanf(" %49s", name);
-    printf("\nEnter Password: ");
-    scanf(" %49s", password);
+    printui("\nEnter Username: ");
+    scanui("%49s", name);
+    printui("\nEnter Password: ");
+    scanui("%49s", password);
 
     int status = verify(name, password);
 
     if (status == 1)
     {
-        printf("Welcome %s\n", name);
+        printui("Welcome %s\n", name);
         strcpy(user.name, name);
         strcpy(user.password, password);
         olduser();
@@ -102,7 +102,7 @@ int authenticate()
     }
     else
     {
-        printf("Access Denied\nTry Again\n");
+        printui("Access Denied\nTry Again\n");
         return authenticate();
     }
 }
@@ -112,15 +112,15 @@ int newuser()
     char name[50];
     char password[50];
 
-    printf("\nEnter Username: ");
-    scanf(" %49s", name);
-    printf("\nEnter Password: ");
-    scanf(" %49s", password);
+    printui("\nEnter Username: ");
+    scanui("%49s", name);
+    printui("\nEnter Password: ");
+    scanui("%49s", password);
 
     FILE *fptr = fopen(name, "w");
     if (!fptr)
     {
-        printf("Error creating user file.\n");
+        printui("Error creating user file.\n");
         return 0;
     }
 
@@ -134,7 +134,7 @@ int newuser()
     fprintf(fptr, "0\n"); // ties
     fclose(fptr);
 
-    printf("User Registered Successfully\n");
+    printui("User Registered Successfully\n");
 
     strcpy(user.name, name);
     strcpy(user.password, password);
@@ -145,8 +145,8 @@ int newuser()
 int newold()
 {
     int choice;
-    printf("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ");
-    scanf("%d", &choice);
+    printui("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ");
+    scanui("%d", &choice);
 
     if (choice == 2)
     {
@@ -154,12 +154,12 @@ int newold()
     }
     else if (choice == 1)
     {
-        printf("Registering New User\n");
+        printui("Registering New User\n");
         return newuser();
     }
     else
     {
-        printf("Invalid Choice, Please choose again\n");
+        printui("Invalid Choice, Please choose again\n");
         return newold();
     }
 }
@@ -169,7 +169,7 @@ int verify(char name[], char password[])
     FILE *fptr = fopen(name, "r");
     if (fptr == NULL)
     {
-        printf("User not found\n");
+        printui("User not found\n");
         return newold();
     }
 
@@ -197,7 +197,7 @@ void logout()
     FILE *fptr = fopen(user.name, "w");
     if (!fptr)
     {
-        printf("Error opening user file for logout.\n");
+        printui("Error opening user file for logout.\n");
         return;
     }
 
@@ -211,25 +211,24 @@ void logout()
     fprintf(fptr, "%d\n", user.ties);
     fclose(fptr);
 
-    printf("User %s logged out successfully.\n", user.name);
+    printui("User %s logged out successfully.\n", user.name);
 }
 
 void multiusers(){
-    printf("Player 1, please enter your name: ");
-    scanf("%s", player1.name);
-    printf("Player 2, please enter your name: ");
-    scanf("%s", player2.name);
+    printui("Player 1, please enter your name: ");
+    scanui("%s", player1.name);
+    printui("Player 2, please enter your name: ");
+    scanui("%s", player2.name);
 }
 
 void mlogout()
 {
-    // char filename[100] = ("%svs%s", player1.name, player2.name);
     char filename[100];
     sprintf(filename, "%svs%s.txt", player1.name, player2.name);
     FILE *fptr = fopen(filename, "w");
     if (!fptr)
     {
-        printf("Error opening users file for logout.\n");
+        printui("Error opening users file for logout.\n");
         return;
     }
     fprintf(fptr, "NO OF MATCHES :: %d\n", player1.no_matches);
