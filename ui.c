@@ -77,6 +77,21 @@ void printui(const char *format, ...)
     gtk_text_buffer_insert(buffer, &end, text, -1);
 }
 
+/* New formatter */
+const char *formatui(const char *fmt, ...)
+{
+    static char buffer[512];   // UI-owned buffer
+
+    va_list args;
+    va_start(args, fmt);
+
+    vsnprintf(buffer, sizeof(buffer), fmt, args);
+
+    va_end(args);
+
+    return buffer;
+}
+
 /* ---------- SCAN UI ---------- */
 void scanui(const char *format, void *out)
 {
