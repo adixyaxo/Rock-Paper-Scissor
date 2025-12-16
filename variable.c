@@ -2,15 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "stats.c"
+#include "stats.h"
 #include "ui.h"
+#include "variable.h"
+#include "auth.h"
+
 // imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
 
 char umove()
 {
-    char u;
-    printui("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC or 27 to exit application\nPlay your move :: ");
-    scanui(" %c", &u);
+    char user_input[1];
+    scanui("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC or 27 to exit application\nPlay your move :: ",user_input);
+    char u =user_input[0];
     sleep(1);
     return u;
 }
@@ -59,7 +62,7 @@ int match()
         // checking for esc
         int usmove = user_move;
 
-        printui("Computer chose: %d\n", comp);
+        printui(formatui("Computer chose: %d\n", comp));
 
         if (user_move != '1' && user_move != '2' && user_move != '3' &&
             user_move != 'R' && user_move != 'P' && user_move != 'S' &&
@@ -155,15 +158,15 @@ int multiplayer()
         char p1_move;
         char p2_move;
 
-        printui(" %s, enter your move: ", player1.name);
+        printui(formatui(" %s, enter your move: ", player1.name));
         p1_move = umove();
         system("cls"); // Clear krdega screen ko taki player 2 ko pata na chale ki player 1 ne kya choose kiya hai
-        printui(" %s, enter your move: ", player2.name);
+        printui(formatui(" %s, enter your move: ", player2.name));
         p2_move = umove();
         system("cls");
 
-        printui("%s chose: %c\n", player1.name, p1_move);
-        printui("%s chose: %c\n", player2.name, p2_move);
+        printui(formatui("%s chose: %c\n", player1.name, p1_move));
+        printui(formatui("%s chose: %c\n", player2.name, p2_move));
         // checking for esc
         int us1move = p1_move;
         int us2move = p2_move;

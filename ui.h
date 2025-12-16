@@ -10,6 +10,7 @@ void ui_start();
 // UI replacements
 void printui(const char *format, ...);
 void scanui(const char *format, void *out);
+const char *formatui(const char *fmt, ...);
 
 // Cleanup
 void ui_quit();

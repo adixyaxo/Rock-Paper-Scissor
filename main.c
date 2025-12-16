@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "variable.c"  
+#include "variable.h"  
 #include "ui.h"
+#include "auth.h"
+#include "game.h"
 
 int main(int argc, char *argv[])
 {

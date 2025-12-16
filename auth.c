@@ -157,14 +157,14 @@ void logout()
             user.name, user.password, user.high_score, user.no_matches, user.no_rounds, user.wins, user.losses, user.ties);
 
     fclose(fptr);
-    printui(formatui()"User %s logged out successfully.\n", user.name));
+    printui(formatui("User %s logged out successfully.\n", user.name));
 }
 
 void multiusers()
 {
     scanui("Player 1, please enter your name: ",player1.name);
     scanui("Player 2, please enter your name: ",player2.name);
-    
+
 }
 
 void mlogout()
