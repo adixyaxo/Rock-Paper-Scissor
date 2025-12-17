@@ -39,19 +39,34 @@ static welcome(void)
     sleep(0.5);
 }
 
-static data(void)
+static tie_sound(void)
+{
+    system("ffplay -nodisp -autoexit ./tie.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static data_sound(void)
 {
     system("ffplay -nodisp -autoexit ./data.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static lost(void)
+static lost_sound(void)
 {
+    system("ffplay -nodisp -autoexit ./youlost.mp3 >/dev/null 2>&1 &");
     system("ffplay -nodisp -autoexit ./lost.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static win(void)
+
+static win_sound(void)
+{
+    system("ffplay -nodisp -autoexit ./youwon.mp3 >/dev/null 2>&1 &");
+    system("ffplay -nodisp -autoexit ./victory.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static victory(void)
 {
     system("ffplay -nodisp -autoexit ./victory.mp3 >/dev/null 2>&1 &");
     sleep(0.5);

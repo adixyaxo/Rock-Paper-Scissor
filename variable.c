@@ -89,6 +89,7 @@ int match()
         else if (user_move == 'T' || user_move == 't')
         {
             displaystats();
+            data_sound();
             continue;
         }
         else if ((user_move == '1' && comp == 1) ||
@@ -100,6 +101,7 @@ int match()
         {
             printui("\nRESULT :: This is a tie\n");
             tie();
+            tie_sound();
             sleep(1);
         }
         else if (
@@ -112,12 +114,14 @@ int match()
         {
             printui("\nRESULT :: Congratulations You Win\n");
             win();
+            win_sound();
             sleep(1);
         }
         else
         {
             printui("\nRESULT :: You Lost\n");
             lost();
+            lost_sound();
             sleep(1);
         }
         user.no_rounds += 1;
@@ -202,6 +206,7 @@ int multiplayer()
                  p2_move == 'T' || p2_move == 't')
         {
             mdisplaystats();
+            data_sound();
             continue;
         }
         else if ((p1_move == '1' && p2_move == '1') ||
@@ -213,6 +218,7 @@ int multiplayer()
         {
             printui("\nRESULT :: This is a tie\n");
             mtie(difficulty_level);
+            tie_sound();
             sleep(1);
             roundsplayed();
         }
@@ -226,6 +232,7 @@ int multiplayer()
         {
             printui("\nRESULT :: Player 1 Wins\n");
             mp1win(difficulty_level);
+            victory();
             sleep(1);
             roundsplayed();
         }
@@ -233,6 +240,7 @@ int multiplayer()
         {
             printui("\nRESULT :: Player 2 Wins\n");
             mp2win(difficulty_level);
+            victory();
             sleep(1);
             roundsplayed();
         }
