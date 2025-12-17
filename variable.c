@@ -13,7 +13,7 @@
 char umove()
 {
     char u;
-    scanui_char("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter ESC or 27 to exit application\nPlay your move :: ",&u);
+    scanui_char("\n\n---PLAY YOUR MOVES---\nEnter 1 or R for rock\nEnter 2 or P for paper\nEnter 3 or S for scissor\nEnter M to return to Main Menu\nEnter Q to quit current game\nEnter T to display current stats\nEnter E to exit application\nPlay your move :: ",&u);
     sleep(1);
     return u;
 }
@@ -30,7 +30,7 @@ int cmove()
 
 int match()
 {
-    newold();
+    newold(); // to find out ki user pahle khela hai ya nahi
     user.no_matches += 1;
     int rounds, n;
     difficulty();
@@ -69,13 +69,13 @@ int match()
             user_move != 'r' && user_move != 'p' && user_move != 's' &&
             user_move != 'M' && user_move != 'Q' && user_move != 'T' &&
             user_move != 'm' && user_move != 'q' && user_move != 't' &&
-            user_move != 27)
+            user_move != 'E' && user_move != 'e')
         {
             printui("Invalid input \n Please try again\n");
             sleep(1);
             continue;
         }
-        else if (usmove == 27) // ESC
+        else if (user_move == 'E' or user_move == 'e') // ESC
         {
             printui("Exiting the game...\n");
             exit(0);
