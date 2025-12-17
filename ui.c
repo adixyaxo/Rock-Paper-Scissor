@@ -13,11 +13,24 @@ static GtkTextBuffer *buffer;
 static gboolean input_ready = FALSE;
 static char input_buffer[512];
 
-static void play_click_sound(void)
+static void scroll_to_bottom(void)
 {
-    system("paplay /usr/share/sounds/freedesktop/stereo/message.oga &");
+    GtkTextIter end;
+    gtk_text_buffer_get_end_iter(buffer, &end);
+    gtk_text_view_scroll_to_iter(
+        GTK_TEXT_VIEW(text_view),
+        &end,
+        0.0,
+        FALSE,
+        0,
+        0
+    );
 }
 
+static void play_click_sound(void)
+{
+    system("ffplay -nodisp -autoexit ./gunshot.mp3 >/dev/null 2>&1 &");
+}
 
 /* ================= CSS ================= */
 static void load_css(void)
@@ -127,19 +140,6 @@ void ui_init(int *argc, char ***argv)
     gtk_widget_show_all(window);
 }
 
-static void scroll_to_bottom(void)
-{
-    GtkTextIter end;
-    gtk_text_buffer_get_end_iter(buffer, &end);
-    gtk_text_view_scroll_to_iter(
-        GTK_TEXT_VIEW(text_view),
-        &end,
-        0.0,
-        FALSE,
-        0,
-        0
-    );
-}
 
 /* ================= PRINT ================= */
 void printui(const char *text)
@@ -164,6 +164,7 @@ const char *formatui(const char *fmt, ...)
 /* ================= SAFE INPUT ================= */
 void scanui_int(const char *prompt, int *out)
 {
+    scroll_to_bottom();
     printui(prompt);
     input_ready = FALSE;
 
@@ -171,10 +172,12 @@ void scanui_int(const char *prompt, int *out)
         gtk_main_iteration_do(FALSE);
 
     *out = atoi(input_buffer);
+
 }
 
 void scanui_char(const char *prompt, char *out)
 {
+    scroll_to_bottom();
     printui(prompt);
     input_ready = FALSE;
 
@@ -186,6 +189,8 @@ void scanui_char(const char *prompt, char *out)
 
 void scanui_str(const char *prompt, char *out, size_t out_size)
 {
+    scroll_to_bottom();
+
     printui(prompt);
     input_ready = FALSE;
 
@@ -197,7 +202,10 @@ void scanui_str(const char *prompt, char *out, size_t out_size)
 
 void clearui(void)
 {
-    gtk_text_buffer_set_text(buffer, "", -1);
+    GtkTextIter start, end;
+    gtk_text_buffer_get_start_iter(buffer, &start);
+    gtk_text_buffer_get_end_iter(buffer, &end);
+    gtk_text_buffer_delete(buffer, &start, &end);
 }
 
 

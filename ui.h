@@ -1,7 +1,6 @@
 #ifndef UI_H
 #define UI_H
 
-#include <gtk/gtk.h>
 #include <stddef.h>
 
 /* UI lifecycle */
@@ -18,4 +17,7 @@ void scanui_int(const char *prompt, int *out);
 void scanui_char(const char *prompt, char *out);
 void scanui_str(const char *prompt, char *out, size_t out_size);
 
-#endif /* UI_H */
+/* NEW: clear screen */
+void clearui(void);
+
+#endif

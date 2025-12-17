@@ -160,10 +160,10 @@ int multiplayer()
 
         printui(formatui(" %s, enter your move: ", player1.name));
         p1_move = umove();
-        system("cls"); // Clear krdega screen ko taki player 2 ko pata na chale ki player 1 ne kya choose kiya hai
+        clearui(); // Clear krdega screen ko taki player 2 ko pata na chale ki player 1 ne kya choose kiya hai
         printui(formatui(" %s, enter your move: ", player2.name));
         p2_move = umove();
-        system("cls");
+        clearui();
 
         printui(formatui("%s chose: %c\n", player1.name, p1_move));
         printui(formatui("%s chose: %c\n", player2.name, p2_move));
@@ -244,6 +244,6 @@ int multiplayer()
             roundsplayed();
         }
     }
-    mlogout();
+    
     return 0;
 }
