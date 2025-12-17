@@ -18,8 +18,14 @@ int modes()
     else if (n == 2)
     {
         int nr;
-        printui("Enter number of rounds (must be odd number): ");
-        scanui_int("%d", &nr);
+        scanui_int("Enter number of rounds (must be odd number): ", &nr);
+        if (nr%2==0)
+        {
+            printui("\nInvalid number of rounds, Please enter an odd number\n");
+            notvictory();
+            return modes();
+        }
+        
         return nr;
     }
     else if (n == 3)

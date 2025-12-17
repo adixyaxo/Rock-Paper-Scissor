@@ -33,42 +33,46 @@ static void play_click_sound(void)
     sleep(0.5);
 }
 
-static welcome(void)
+void welcome(void)
 {
     system("ffplay -nodisp -autoexit ./welcome.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static tie_sound(void)
+void tie_sound(void)
 {
     system("ffplay -nodisp -autoexit ./tie.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static data_sound(void)
+void data_sound(void)
 {
     system("ffplay -nodisp -autoexit ./data.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static lost_sound(void)
+void lost_sound(void)
 {
     system("ffplay -nodisp -autoexit ./youlost.mp3 >/dev/null 2>&1 &");
-    system("ffplay -nodisp -autoexit ./lost.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
 
-static win_sound(void)
+void win_sound(void)    
 {
     system("ffplay -nodisp -autoexit ./youwon.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+void victory(void)
+{
     system("ffplay -nodisp -autoexit ./victory.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 
-static victory(void)
+void notvictory(void)
 {
-    system("ffplay -nodisp -autoexit ./victory.mp3 >/dev/null 2>&1 &");
+    system("ffplay -nodisp -autoexit ./lost.mp3 >/dev/null 2>&1 &");
     sleep(0.5);
 }
 

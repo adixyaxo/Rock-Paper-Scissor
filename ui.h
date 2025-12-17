@@ -22,7 +22,7 @@ void tie_sound(void);
 void data_sound(void);
 void lost_sound(void);
 void win_sound(void);
-
+void notvictory(void);
 /* NEW: clear screen */
 void clearui(void);
 
