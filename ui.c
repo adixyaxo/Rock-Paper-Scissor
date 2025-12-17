@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "ui.h"
+#include <unistd.h>
 
 /* ================= GTK WIDGETS ================= */
 static GtkWidget *window;
@@ -28,7 +29,32 @@ static void scroll_to_bottom(void)
 
 static void play_click_sound(void)
 {
-    system("ffplay -nodisp -autoexit ./gunshot.mp3 >/dev/null 2>&1 &");
+    system("ffplay -nodisp -autoexit ./click.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static welcome(void)
+{
+    system("ffplay -nodisp -autoexit ./welcome.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static data(void)
+{
+    system("ffplay -nodisp -autoexit ./data.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static lost(void)
+{
+    system("ffplay -nodisp -autoexit ./lost.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
+}
+
+static win(void)
+{
+    system("ffplay -nodisp -autoexit ./victory.mp3 >/dev/null 2>&1 &");
+    sleep(0.5);
 }
 
 /* ================= CSS ================= */

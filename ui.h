@@ -16,7 +16,7 @@ const char *formatui(const char *fmt, ...);
 void scanui_int(const char *prompt, int *out);
 void scanui_char(const char *prompt, char *out);
 void scanui_str(const char *prompt, char *out, size_t out_size);
-
+void welcome(void);
 /* NEW: clear screen */
 void clearui(void);
 

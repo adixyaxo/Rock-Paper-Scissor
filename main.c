@@ -25,6 +25,7 @@ gboolean start_game(gpointer data)
 int main(int argc, char **argv)
 {
     // Initialize GTK and setup UI
+    welcome();
     ui_init(&argc, &argv);
 
     // Schedule start_game to run after GTK window is ready
