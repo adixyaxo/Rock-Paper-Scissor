@@ -203,6 +203,7 @@ void mdisplaystats()
     printui(formatui("--------------------------\n\n"));
 }
 
+// below two are for multiplayer 
 void roundsplayed()
 {
     player1.no_rounds += 1;

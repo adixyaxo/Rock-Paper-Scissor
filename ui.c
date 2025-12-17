@@ -9,7 +9,6 @@ static GtkWidget *window;
 static GtkWidget *text_view;
 static GtkWidget *entry;
 static GtkTextBuffer *buffer;
-
 static gboolean input_ready = FALSE;
 static char input_buffer[512];
 
@@ -140,7 +139,6 @@ void ui_init(int *argc, char ***argv)
     gtk_widget_show_all(window);
 }
 
-
 /* ================= PRINT ================= */
 void printui(const char *text)
 {
@@ -207,7 +205,6 @@ void clearui(void)
     gtk_text_buffer_get_end_iter(buffer, &end);
     gtk_text_buffer_delete(buffer, &start, &end);
 }
-
 
 /* ================= LOOP ================= */
 void ui_start(void)

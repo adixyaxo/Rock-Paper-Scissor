@@ -112,9 +112,9 @@ int newold()
     scanui_int("Are you a new user or existing user?\nNew User--1\nExisting User--2\nEnter choice (1 or 2): ", &choice);
 
     if (choice == 2)
-        return authenticate();
+        return authenticate(); // old user
     else if (choice == 1)
-        return newuser();
+        return newuser(); // new user
     else
     {
         printui("Invalid Choice, Please choose again\n");

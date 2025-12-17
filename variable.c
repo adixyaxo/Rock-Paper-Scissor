@@ -8,8 +8,6 @@
 #include "auth.h"
 #include "game.h"
 
-// imported game to use it in the loop jisse ham pata kar paen ki loop ko kitni bar chalana hai
-
 char umove()
 {
     char u;
@@ -59,8 +57,6 @@ int match()
         user_move = umove();
         comp = cmove();
 
-        // checking for esc
-        int usmove = user_move;
 
         printui(formatui("Computer chose: %d\n", comp));
 
